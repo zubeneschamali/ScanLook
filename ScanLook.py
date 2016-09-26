@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# _*_ coding:utf-8 _*_
+# -*- coding:utf-8 -*-
 
-import os
+from os import system
 import sys
 import urllib.parse
 import urllib.request
@@ -37,9 +37,9 @@ class Colors:
 
 def Sistema():
     if sys.platform in ['linux', 'linux2']:
-        os.system("clear")
+        system("clear")
     else:
-        os.system("cls")
+        system("cls")
 
 
 def Argumentos():
@@ -96,7 +96,8 @@ def Verific():
         try:
             req = requests.get("http://www." + i[0]).text
             if "/wp-content/" in req or "/wp-includes/" in req:
-                print(Colors.default + "http://" + i[0] + Colors.red + " CMS: WordPress")
+                print(Colors.default + "http://" +
+                      i[0] + Colors.red + " CMS: WordPress")
                 Attack("http://" + i[0])
             else:
                 print("http://" + i[0] + " CMS não detectado.")
